@@ -41,8 +41,11 @@ namespace Retargeting
             // but you can use any mean you need.
             string libraryLocation = System.Environment.GetEnvironmentVariable("IISU_SDK_DIR");
             IHandleConfiguration config = Iisu.Iisu.Context.CreateHandleConfiguration();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b8e918927be2a4af4732581fe5ad6d829df34356
             config.IisuBinDir = (libraryLocation + "/bin");
             config.ConfigFileName = "iisu_config.xml";
 

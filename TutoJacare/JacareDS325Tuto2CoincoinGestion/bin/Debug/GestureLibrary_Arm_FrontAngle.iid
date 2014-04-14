@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IisuInteractionDesignerProject Version="3.0.17">
+  <Graph id="{79c1b47a-c60c-4c0e-9a6f-97206fe83a99}">
+    <Node id="{b4424be4-b2e3-4de7-bf78-35bda23d71d8}" name="Left Arm Front Angle" type="visualizer:angle">
+      <Input id="{7bb564e8-e5c3-4ddb-8ac7-124ae27a37d8}" name="left_arm_front_angle_absolute" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{876235a8-45ec-449e-ab53-5a52f536c893}" destination="{b4424be4-b2e3-4de7-bf78-35bda23d71d8}" destinationinput="{7bb564e8-e5c3-4ddb-8ac7-124ae27a37d8}" />
+    <Node id="{e4f08982-767f-4d8a-b6f0-45c317d72f17}" name="iisu Data &amp; Parameters" type="iisu device" />
+    <Node id="{a34e5f24-de1a-4bb5-8d58-8838b71304a0}" name="LeftArm_FrontAngle_Minimum" type="input:slider">
+      <Value value="-5" min="-45" max="90" />
+      <Output id="{24dbb098-2efe-4319-8464-8c00d9c674a0}" name="LeftArm_FrontAngle_Minimum" />
+    </Node>
+    <Node id="{82e807a4-69e8-4f77-a1df-9a03c1b46291}" name="RightArm_FrontAngle_Maximum" type="input:slider">
+      <Value value="135" min="0" max="180" />
+      <Output id="{25e14398-3127-4bfc-951b-fffe176142cd}" name="RightArm_FrontAngle_Maximum" />
+    </Node>
+    <Node id="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" name="Arm_FrontAngle" type="lua script">
+      <Input id="{0dacd525-bc47-4bad-aad9-7e160269e4be}" name="LeftArm_FrontAngle_Minimum" />
+      <Input id="{9842f200-a162-4ec1-b339-8c8e477fb1ea}" name="RightArm_FrontAngle_Minimum" />
+      <Input id="{cc27d268-4eb5-4b76-bc3e-4ad931397262}" name="LeftArm_FrontAngle_Maximum" />
+      <Input id="{a30d502b-58da-4ac6-a2cd-21d09b0ad6ac}" name="RightArm_FrontAngle_Maximum" />
+      <Input id="{fbeb0cfc-f5af-4646-9fc5-68b946cbf91a}" name="USER1.SKELETON.PARTS.Pelvis" />
+      <Input id="{e2fde7fa-9955-4695-b2d3-6fc157136314}" name="USER1.SKELETON.PARTS.Head" />
+      <Input id="{6f11fc08-65b6-49df-8825-f9017a472aac}" name="USER1.SKELETON.PARTS.RightWrist" />
+      <Input id="{ad057f00-bce4-45f8-a357-03a7f893c0c2}" name="USER1.SKELETON.PARTS.LeftWrist" />
+      <Output id="{8d7320dc-96de-4905-8154-92cd633ec46a}" name="visualization_minAngle" />
+      <Output id="{f52b666e-e94e-42c2-a75c-6e3edb4f22ee}" name="visualization_maxAngle" />
+      <Output id="{f5baaa52-8434-4bce-b02f-77984f2f6ae9}" name="left_shoulder" />
+      <Output id="{f23c9c13-ca6f-4e6d-ab16-d1aa5c23ca38}" name="visualization_minAngleR" />
+      <Output id="{073e8da8-8c45-4b0c-8319-e4ac131efe13}" name="visualization_maxAngleR" />
+      <Output id="{3b1a051e-a749-489e-9192-2826e4d293b4}" name="right_shoulder" />
+      <Output id="{4f7cfece-4e36-49d1-a7ef-b0d408522055}" name="left_arm_front_angle" />
+      <Output id="{a6b2ddb6-a2fd-41be-b818-4cf85cd488d7}" name="right_arm_front_angle" />
+      <Output id="{7025b058-374a-4664-9846-7efb6ba60aaa}" name="visualization_frontAngle" />
+      <Output id="{f3b7b656-3fe2-4144-a57a-7318352650bf}" name="visualization_frontAngleR" />
+      <Output id="{7b58e8de-6916-44b7-9748-5c7169f2fcb3}" name="left_hand" />
+      <Output id="{4fe83c9a-ce5f-4e15-a509-3681492cef73}" name="right_hand" />
+      <Output id="{c31309e4-0595-4d59-bf24-35682480624f}" name="right_arm_front_angle_absolute" />
+      <Output id="{876235a8-45ec-449e-ab53-5a52f536c893}" name="left_arm_front_angle_absolute" />
+      <Output id="{53e80db3-f145-4871-be99-21b67521861c}" name="visualization_minAngle_dir" />
+      <Output id="{9b83e8e8-2219-4fe8-b953-e688cc937a2a}" name="visualization_maxAngle_dir" />
+      <Output id="{12938201-3139-4e58-86a5-aaf4a1b22937}" name="visualization_minAngleR_dir" />
+      <Output id="{2f9ff797-8383-444d-a498-8607b4bb1125}" name="visualization_maxAngleR_dir" />
+      <Output id="{79c8527b-5699-474b-a939-d3ba9e63b61a}" name="visualization_fronAngle_dir" />
+      <Output id="{3b9a4b15-81c4-494f-8ef6-3957b0eb0b2f}" name="visualization_frontAngleR_dir" />
+      <CustomParameter id="{4f7cfece-4e36-49d1-a7ef-b0d408522055}" />
+      <CustomParameter id="{a6b2ddb6-a2fd-41be-b818-4cf85cd488d7}" />
+      <Content><![CDATA[-----------------------------------------------------------------------------------------------------------------------------------
+--  DISCLAIMER
+--  All rights reserved to SOFTKINETIC INTERNATIONAL SA/NV (a company incorporated and existing under the laws of Belgium, with its principal place of business at
+--  Boulevard de la Plainelaan 15, 1050 Brussels (Belgium), registered with the Crossroads bank for enterprises under company number 0811 784 189 - Softkinetic)
+--
+--  Terms and conditions of use under license agreement : SOFTKINETIC IISUTM FREEMIUM LICENSE AGREEMENT 
+--  Note: Any content and information related to iisu free is confidential and proprietary information and trade secrets of Softkinetic or its licensors. Header files
+--  included in the Software as well as any delivered demonstration code and sample code (whether included in the Documentation or not), the documentation
+--  and any derivatives thereof may only be shared with other licensees of the Software, and exclusively on the Softkinetic iisu free developer community forum. 
+--  For any question about terms and conditions, please contact: info@softkinetic.com
+-----------------------------------------------------------------------------------------------------------------------------------
+
+function init()
+-- Important note:
+--   It's best to initialize ALL your variables here. Otherwise, you might get unexpected results.
+--   See the iisu Interaction Designer manual for more info.
+left_arm_front_angle = 0.0
+right_arm_front_angle = 0.0
+end
+
+function main()
+	-----------------------------------------------------------------
+	-- Compute the point that is between the shoulders 
+	-- (more or less 75% of the distance from the pelvis to the head)
+	-----------------------------------------------------------------
+	head = USER1_SKELETON_PARTS_Head
+	pelvis = USER1_SKELETON_PARTS_Pelvis
+	left_hand = USER1_SKELETON_PARTS_LeftWrist
+	right_hand = USER1_SKELETON_PARTS_RightWrist
+  point_between_shoulders = (head - pelvis)*0.75 + pelvis
+	-----------------------------------------------------------------
+	
+	-----------------------------------------------------------------
+	-- Compute the approximate position of both shoulders 
+	-- (more or less 18cm apart from the center position)
+	-----------------------------------------------------------------
+	left_shoulder = point_between_shoulders + SK.Axis_LEFT * 0.18
+	right_shoulder = point_between_shoulders + SK.Axis_RIGHT * 0.18
+	-----------------------------------------------------------------
+	
+	-----------------------------------------------------------------
+	-- Compute the angle of the left arm 
+	-- (in degrees, 0 being the arm pointing down and increasing as the arm raises to the left)
+	-----------------------------------------------------------------
+	left_arm_front_angle_absolute = SK.axisAngle(left_hand - left_shoulder, SK.Axis_DOWN,SK.Axis_FRONT)
+	left_arm_front_angle_absolute = Macros.Smooth(left_arm_front_angle_absolute,0.2)
+	-----------------------------------------------------------------
+	
+	-----------------------------------------------------------------
+	-- Clamp the angle of the left arm to the minimum and maximum boundaries
+	-----------------------------------------------------------------
+	left_arm_front_angle_absolute = math.max( LeftArm_FrontAngle_Minimum ,math.min( LeftArm_FrontAngle_Maximum ,left_arm_front_angle_absolute))
+	-----------------------------------------------------------------
+
+	-----------------------------------------------------------------
+	-- Compute the angle of the right arm 
+	-- (in degrees, 0 being the arm pointing down and increasing as the arm raises to the right)
+	-----------------------------------------------------------------
+	right_arm_front_angle_absolute = SK.axisAngle(right_hand - right_shoulder, SK.Axis_DOWN,SK.Axis_FRONT)
+	right_arm_front_angle_absolute = Macros.Smooth(right_arm_front_angle_absolute,0.2)
+	-----------------------------------------------------------------
+	
+	-----------------------------------------------------------------
+	-- Clamp the angle of the left arm to the minimum and maximum boundaries
+	-----------------------------------------------------------------
+	right_arm_front_angle_absolute = math.max( RightArm_FrontAngle_Minimum ,math.min( RightArm_FrontAngle_Maximum ,right_arm_front_angle_absolute))
+	-----------------------------------------------------------------
+
+	-----------------------------------------------------------------
+	-- remap/rescale the left angle to the 0-1 interval
+	-----------------------------------------------------------------
+	if(LeftArm_FrontAngle_Minimum == LeftArm_FrontAngle_Maximum) then
+		left_arm_front_angle = 0
+	else
+		left_arm_front_angle = (left_arm_front_angle_absolute - LeftArm_FrontAngle_Minimum)/(LeftArm_FrontAngle_Maximum - LeftArm_FrontAngle_Minimum)
+	end
+	-----------------------------------------------------------------
+
+	-----------------------------------------------------------------
+	-- remap/rescale the right angle to the 0-1 interval
+	-----------------------------------------------------------------
+	if(RightArm_FrontAngle_Minimum == RightArm_FrontAngle_Maximum) then
+		right_arm_front_angle = 0
+	else
+		right_arm_front_angle = (right_arm_front_angle_absolute - RightArm_FrontAngle_Minimum)/(RightArm_FrontAngle_Maximum - RightArm_FrontAngle_Minimum)
+	end
+	-----------------------------------------------------------------
+
+	
+	-----------------------------------------------------------------
+	-- visualization codes (disable the next lines to gain a bit on performance when using this script without the interaction designer tool)
+	-----------------------------------------------------------------
+	degreeToRadian = 3.14/180
+	visualization_minAngle_dir = SK.Axis_DOWN * math.cos(LeftArm_FrontAngle_Minimum*degreeToRadian)+ SK.Axis_FRONT * math.sin(LeftArm_FrontAngle_Minimum*degreeToRadian)
+	visualization_minAngle = left_shoulder + visualization_minAngle_dir
+	visualization_maxAngle_dir = SK.Axis_DOWN * math.cos(LeftArm_FrontAngle_Maximum*degreeToRadian)+ SK.Axis_FRONT * math.sin(LeftArm_FrontAngle_Maximum*degreeToRadian)
+	visualization_maxAngle = left_shoulder + visualization_maxAngle_dir
+	visualization_fronAngle_dir = SK.Axis_DOWN * math.cos(left_arm_front_angle_absolute*degreeToRadian)+ SK.Axis_FRONT * math.sin(left_arm_front_angle_absolute*degreeToRadian)
+	visualization_frontAngle = left_shoulder + visualization_fronAngle_dir
+
+	visualization_minAngleR_dir = SK.Axis_DOWN * math.cos(RightArm_FrontAngle_Minimum*degreeToRadian)+ SK.Axis_FRONT * math.sin(RightArm_FrontAngle_Minimum*degreeToRadian)
+	visualization_minAngleR = right_shoulder + visualization_minAngleR_dir
+	visualization_maxAngleR_dir = SK.Axis_DOWN * math.cos(RightArm_FrontAngle_Maximum*degreeToRadian)+ SK.Axis_FRONT * math.sin(RightArm_FrontAngle_Maximum*degreeToRadian)
+	visualization_maxAngleR = right_shoulder + visualization_maxAngleR_dir
+	visualization_frontAngleR_dir = SK.Axis_DOWN * math.cos(right_arm_front_angle_absolute*degreeToRadian)+ SK.Axis_FRONT * math.sin(right_arm_front_angle_absolute*degreeToRadian)
+	visualization_frontAngleR = right_shoulder + visualization_frontAngleR_dir
+	-----------------------------------------------------------------
+
+end
+]]></Content>
+    </Node>
+    <Link source="{a34e5f24-de1a-4bb5-8d58-8838b71304a0}" sourceoutput="{24dbb098-2efe-4319-8464-8c00d9c674a0}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{0dacd525-bc47-4bad-aad9-7e160269e4be}" />
+    <Link source="{2dde337e-2fe8-401a-a3bf-f95c2fd791a8}" sourceoutput="{77085842-38ad-4235-8944-1c8425bb2960}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{9842f200-a162-4ec1-b339-8c8e477fb1ea}" />
+    <Link source="{e7047dea-b366-4612-bf90-7a1a83ff2bc6}" sourceoutput="{20a05a74-53af-4809-abbd-c8d9ce590083}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{cc27d268-4eb5-4b76-bc3e-4ad931397262}" />
+    <Link source="{82e807a4-69e8-4f77-a1df-9a03c1b46291}" sourceoutput="{25e14398-3127-4bfc-951b-fffe176142cd}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{a30d502b-58da-4ac6-a2cd-21d09b0ad6ac}" />
+    <Link source="{761e6beb-37ed-43df-b3d8-dd023d8272d4}" sourceoutput="{20f8bd79-f682-4f11-9b9c-a455f1fc2092}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{fbeb0cfc-f5af-4646-9fc5-68b946cbf91a}" />
+    <Link source="{761e6beb-37ed-43df-b3d8-dd023d8272d4}" sourceoutput="{bf2469c7-32d3-404e-abc2-649f4f3ab391}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{e2fde7fa-9955-4695-b2d3-6fc157136314}" />
+    <Link source="{761e6beb-37ed-43df-b3d8-dd023d8272d4}" sourceoutput="{112e9fa0-12f3-4dc3-adda-903321f38703}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{6f11fc08-65b6-49df-8825-f9017a472aac}" />
+    <Link source="{761e6beb-37ed-43df-b3d8-dd023d8272d4}" sourceoutput="{f6af4ac8-c561-4896-b08e-fa8ea48e790a}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{ad057f00-bce4-45f8-a357-03a7f893c0c2}" />
+    <Node id="{2dde337e-2fe8-401a-a3bf-f95c2fd791a8}" name="RightArm_FrontAngle_Minimum" type="input:slider">
+      <Value value="-5" min="-45" max="90" />
+      <Output id="{77085842-38ad-4235-8944-1c8425bb2960}" name="RightArm_FrontAngle_Minimum" />
+    </Node>
+    <Node id="{e7047dea-b366-4612-bf90-7a1a83ff2bc6}" name="LeftArm_FrontAngle_Maximum" type="input:slider">
+      <Value value="135" min="0" max="180" />
+      <Output id="{20a05a74-53af-4809-abbd-c8d9ce590083}" name="LeftArm_FrontAngle_Maximum" />
+    </Node>
+    <Node id="{1372e4de-0ac2-4d7c-bf67-1f4bd215190e}" name="Box_RightHand" type="primitive3d:box">
+      <Input id="{db1a1c8a-2ed6-431b-8f08-fdf2df2367a9}" name="right_hand" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=-0.0881542; y=-0.275862; z=1.14085 )" input="{db1a1c8a-2ed6-431b-8f08-fdf2df2367a9}" />
+      <Property name="Scale" value="( x=0.07; y=0.07; z=0.07 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{4fe83c9a-ce5f-4e15-a509-3681492cef73}" destination="{1372e4de-0ac2-4d7c-bf67-1f4bd215190e}" destinationinput="{db1a1c8a-2ed6-431b-8f08-fdf2df2367a9}" />
+    <Node id="{ca720ee8-5f3d-4a30-b9be-1ce0e5cb4bc4}" name="Box_LeftHand" type="primitive3d:box">
+      <Input id="{01fcdfd6-750b-4883-91fe-140ad6789b95}" name="left_hand" />
+      <Property name="Position" value="( x=-0.0463655; y=0.132999; z=0.80981 )" input="{01fcdfd6-750b-4883-91fe-140ad6789b95}" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Scale" value="( x=0.07; y=0.07; z=0.07 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{7b58e8de-6916-44b7-9748-5c7169f2fcb3}" destination="{ca720ee8-5f3d-4a30-b9be-1ce0e5cb4bc4}" destinationinput="{01fcdfd6-750b-4883-91fe-140ad6789b95}" />
+    <Node id="{5d58dc96-f74f-444e-aa39-499658624c53}" name="Right Arm Front Angle" type="visualizer:angle">
+      <Input id="{2305fc54-1a3b-49ba-b972-592c5092604c}" name="right_arm_front_angle_absolute" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{c31309e4-0595-4d59-bf24-35682480624f}" destination="{5d58dc96-f74f-444e-aa39-499658624c53}" destinationinput="{2305fc54-1a3b-49ba-b972-592c5092604c}" />
+    <Node id="{86379963-3c7f-478e-b5b2-c30356b54ebe}" name="Max_Angle_Dir" type="primitive3d:arrow">
+      <Input id="{011f0a8d-341c-4e8e-a0ca-1c225254e382}" name="left_shoulder" />
+      <Input id="{f741b89c-b582-4ecd-92e8-a424df50c751}" name="visualization_maxAngle_dir" />
+      <Property name="Direction" value="( x=0; y=-0.7079508; z=0.7062618 )" input="{f741b89c-b582-4ecd-92e8-a424df50c751}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=0.229699; y=0.165659; z=1.39505 )" input="{011f0a8d-341c-4e8e-a0ca-1c225254e382}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{f5baaa52-8434-4bce-b02f-77984f2f6ae9}" destination="{86379963-3c7f-478e-b5b2-c30356b54ebe}" destinationinput="{011f0a8d-341c-4e8e-a0ca-1c225254e382}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{9b83e8e8-2219-4fe8-b953-e688cc937a2a}" destination="{86379963-3c7f-478e-b5b2-c30356b54ebe}" destinationinput="{f741b89c-b582-4ecd-92e8-a424df50c751}" />
+    <Node id="{971b6307-6eac-44d6-be33-0ca5dab16a57}" name="Max_AngleR_Dir" type="primitive3d:arrow">
+      <Input id="{479bd03c-43e1-4971-a320-3a33eb97af74}" name="visualization_maxAngleR_dir" />
+      <Input id="{8b3612a5-eef8-4e31-bfbe-211b52991923}" name="right_shoulder" />
+      <Property name="Direction" value="( x=0; y=-0.7079508; z=0.7062618 )" input="{479bd03c-43e1-4971-a320-3a33eb97af74}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=-0.130301; y=0.165659; z=1.39505 )" input="{8b3612a5-eef8-4e31-bfbe-211b52991923}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{2f9ff797-8383-444d-a498-8607b4bb1125}" destination="{971b6307-6eac-44d6-be33-0ca5dab16a57}" destinationinput="{479bd03c-43e1-4971-a320-3a33eb97af74}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{3b1a051e-a749-489e-9192-2826e4d293b4}" destination="{971b6307-6eac-44d6-be33-0ca5dab16a57}" destinationinput="{8b3612a5-eef8-4e31-bfbe-211b52991923}" />
+    <Node id="{ce3736e6-4446-4868-9447-dd8ce81c7c25}" name="Min_Angle_Dir" type="primitive3d:arrow">
+      <Input id="{c49a854a-5bcc-49dd-a119-a023492b7d47}" name="left_shoulder" />
+      <Input id="{a3c14d30-a691-4edb-9a98-7a3f9f3637d3}" name="visualization_minAngle_dir" />
+      <Property name="Direction" value="( x=0; y=0.08711165; z=-0.9961985 )" input="{a3c14d30-a691-4edb-9a98-7a3f9f3637d3}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=0.229699; y=0.165659; z=1.39505 )" input="{c49a854a-5bcc-49dd-a119-a023492b7d47}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{f5baaa52-8434-4bce-b02f-77984f2f6ae9}" destination="{ce3736e6-4446-4868-9447-dd8ce81c7c25}" destinationinput="{c49a854a-5bcc-49dd-a119-a023492b7d47}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{53e80db3-f145-4871-be99-21b67521861c}" destination="{ce3736e6-4446-4868-9447-dd8ce81c7c25}" destinationinput="{a3c14d30-a691-4edb-9a98-7a3f9f3637d3}" />
+    <Node id="{9029808d-d180-4f44-a1b1-299c4a8e7f47}" name="Min_AngleR_Dir" type="primitive3d:arrow">
+      <Input id="{2df440cd-ebad-436f-aff0-ef8f940db5d5}" name="right_shoulder" />
+      <Input id="{90549631-1491-4988-b003-b681d9143142}" name="visualization_minAngleR_dir" />
+      <Property name="Direction" value="( x=0; y=0.08711165; z=-0.9961985 )" input="{90549631-1491-4988-b003-b681d9143142}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=0.8000001; g=0.8000001; b=0.8000001; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=-0.130301; y=0.165659; z=1.39505 )" input="{2df440cd-ebad-436f-aff0-ef8f940db5d5}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{3b1a051e-a749-489e-9192-2826e4d293b4}" destination="{9029808d-d180-4f44-a1b1-299c4a8e7f47}" destinationinput="{2df440cd-ebad-436f-aff0-ef8f940db5d5}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{12938201-3139-4e58-86a5-aaf4a1b22937}" destination="{9029808d-d180-4f44-a1b1-299c4a8e7f47}" destinationinput="{90549631-1491-4988-b003-b681d9143142}" />
+    <Node id="{97e88bc6-bd83-4116-9ada-69081814a623}" name="Front_Angle_Dir" type="primitive3d:arrow">
+      <Input id="{82958671-37bf-44d5-ac3f-e4db63ba136a}" name="visualization_fronAngle_dir" />
+      <Input id="{f7e0e5de-ed1f-4f3c-9332-e8547cd636f8}" name="left_shoulder" />
+      <Property name="Direction" value="( x=0; y=-0.05494403; z=-0.9984895 )" input="{82958671-37bf-44d5-ac3f-e4db63ba136a}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=1; g=0; b=0; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=0.229699; y=0.165659; z=1.39505 )" input="{f7e0e5de-ed1f-4f3c-9332-e8547cd636f8}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{79c8527b-5699-474b-a939-d3ba9e63b61a}" destination="{97e88bc6-bd83-4116-9ada-69081814a623}" destinationinput="{82958671-37bf-44d5-ac3f-e4db63ba136a}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{f5baaa52-8434-4bce-b02f-77984f2f6ae9}" destination="{97e88bc6-bd83-4116-9ada-69081814a623}" destinationinput="{f7e0e5de-ed1f-4f3c-9332-e8547cd636f8}" />
+    <Node id="{6948fdca-247e-4340-b644-5aa2205daace}" name="Front_AngleR_Dir" type="primitive3d:arrow">
+      <Input id="{d6364701-b347-49b7-81c5-08f9df61a0c5}" name="right_shoulder" />
+      <Input id="{af994ea0-a3be-45d2-b736-de22e35e870d}" name="visualization_frontAngleR_dir" />
+      <Property name="Direction" value="( x=0; y=-0.7327428; z=-0.6805058 )" input="{af994ea0-a3be-45d2-b736-de22e35e870d}" />
+      <Property name="Length" value="0.9" />
+      <Property name="Radius" value="0.04" />
+      <Property name="Color" value="( r=0; g=0; b=1; a=1 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=-0.130301; y=0.165659; z=1.39505 )" input="{d6364701-b347-49b7-81c5-08f9df61a0c5}" />
+      <Property name="Scale" value="( x=0.04; y=0.04; z=0.9 )" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{3b1a051e-a749-489e-9192-2826e4d293b4}" destination="{6948fdca-247e-4340-b644-5aa2205daace}" destinationinput="{d6364701-b347-49b7-81c5-08f9df61a0c5}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{3b9a4b15-81c4-494f-8ef6-3957b0eb0b2f}" destination="{6948fdca-247e-4340-b644-5aa2205daace}" destinationinput="{af994ea0-a3be-45d2-b736-de22e35e870d}" />
+    <Node id="{2921c6c2-8c77-4cca-b63a-afa740717a1a}" name="Fron_AngleR_Label" type="primitive3d:label">
+      <Input id="{582875d7-d044-4f1b-8346-269899efbecd}" name="visualization_frontAngleR" />
+      <Input id="{9b74f483-9178-40ca-b6f2-5c4b47f4b25d}" name="right_arm_front_angle_absolute" />
+      <Property name="Value" value="47.14073" input="{9b74f483-9178-40ca-b6f2-5c4b47f4b25d}" />
+      <Property name="TextSize" value="12" />
+      <Property name="HorizontalOffset" value="5" />
+      <Property name="Color" value="( r=1; g=1; b=1; a=1 )" />
+      <Property name="TextColor" value="( r=1; g=1; b=1; a=1 )" />
+      <Property name="BackgroundColor" value="( r=0; g=0; b=0; a=0 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=-0.130301; y=-0.567084; z=0.714543 )" input="{582875d7-d044-4f1b-8346-269899efbecd}" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{f3b7b656-3fe2-4144-a57a-7318352650bf}" destination="{2921c6c2-8c77-4cca-b63a-afa740717a1a}" destinationinput="{582875d7-d044-4f1b-8346-269899efbecd}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{c31309e4-0595-4d59-bf24-35682480624f}" destination="{2921c6c2-8c77-4cca-b63a-afa740717a1a}" destinationinput="{9b74f483-9178-40ca-b6f2-5c4b47f4b25d}" />
+    <Node id="{52a72c3a-8f3f-4c91-b5e3-f680f9c5f540}" name="Front_Angle_Label" type="primitive3d:label">
+      <Input id="{a78c2f71-665c-4a7a-965d-8f642ec0a2f6}" name="left_arm_front_angle_absolute" />
+      <Input id="{5731a248-0a85-4bad-bf80-4e313e6c5873}" name="visualization_frontAngle" />
+      <Property name="Value" value="3.151244" input="{a78c2f71-665c-4a7a-965d-8f642ec0a2f6}" />
+      <Property name="TextSize" value="12" />
+      <Property name="HorizontalOffset" value="5" />
+      <Property name="Color" value="( r=1; g=1; b=1; a=1 )" />
+      <Property name="TextColor" value="( r=1; g=1; b=1; a=1 )" />
+      <Property name="BackgroundColor" value="( r=0; g=0; b=0; a=0 )" />
+      <Property name="Selected" value="False" />
+      <Property name="Position" value="( x=0.229699; y=0.110715; z=0.396559 )" input="{5731a248-0a85-4bad-bf80-4e313e6c5873}" />
+      <Property name="ForceCull" value="False" />
+    </Node>
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{876235a8-45ec-449e-ab53-5a52f536c893}" destination="{52a72c3a-8f3f-4c91-b5e3-f680f9c5f540}" destinationinput="{a78c2f71-665c-4a7a-965d-8f642ec0a2f6}" />
+    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{7025b058-374a-4664-9846-7efb6ba60aaa}" destination="{52a72c3a-8f3f-4c91-b5e3-f680f9c5f540}" destinationinput="{5731a248-0a85-4bad-bf80-4e313e6c5873}" />
+    <Node id="{761e6beb-37ed-43df-b3d8-dd023d8272d4}" name="" type="iisu skeleton">
+      <Output id="{20f8bd79-f682-4f11-9b9c-a455f1fc2092}" name="USER1.SKELETON.PARTS.Pelvis" />
+      <Output id="{bf2469c7-32d3-404e-abc2-649f4f3ab391}" name="USER1.SKELETON.PARTS.Head" />
+      <Output id="{112e9fa0-12f3-4dc3-adda-903321f38703}" name="USER1.SKELETON.PARTS.RightWrist" />
+      <Output id="{f6af4ac8-c561-4896-b08e-fa8ea48e790a}" name="USER1.SKELETON.PARTS.LeftWrist" />
+    </Node>
+  </Graph>
+  <Movies>
+    <Movie id="A9-4E-42-C1-37-75-1B-9B-0B-B3-B1-02-AD-65-B9-EF" />
+  </Movies>
+  <WindowLayout>
+    <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="0" ActivePane="-1">
+      <Contents Count="7">
+        <Content ID="0" PersistString="IID.FormDepth" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="1" PersistString="{a34e5f24-de1a-4bb5-8d58-8838b71304a0}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="2" PersistString="{e7047dea-b366-4612-bf90-7a1a83ff2bc6}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="3" PersistString="{2dde337e-2fe8-401a-a3bf-f95c2fd791a8}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="4" PersistString="{82e807a4-69e8-4f77-a1df-9a03c1b46291}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="5" PersistString="{5d58dc96-f74f-444e-aa39-499658624c53}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+        <Content ID="6" PersistString="{b4424be4-b2e3-4de7-bf78-35bda23d71d8}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+      </Contents>
+      <Panes Count="7">
+        <Pane ID="0" DockState="Document" ActiveContent="0">
+          <Contents Count="1">
+            <Content ID="0" RefID="0" />
+          </Contents>
+        </Pane>
+        <Pane ID="1" DockState="Document" ActiveContent="1">
+          <Contents Count="1">
+            <Content ID="0" RefID="1" />
+          </Contents>
+        </Pane>
+        <Pane ID="2" DockState="Document" ActiveContent="2">
+          <Contents Count="1">
+            <Content ID="0" RefID="2" />
+          </Contents>
+        </Pane>
+        <Pane ID="3" DockState="Document" ActiveContent="3">
+          <Contents Count="1">
+            <Content ID="0" RefID="3" />
+          </Contents>
+        </Pane>
+        <Pane ID="4" DockState="Document" ActiveContent="4">
+          <Contents Count="1">
+            <Content ID="0" RefID="4" />
+          </Contents>
+        </Pane>
+        <Pane ID="5" DockState="Document" ActiveContent="5">
+          <Contents Count="1">
+            <Content ID="0" RefID="5" />
+          </Contents>
+        </Pane>
+        <Pane ID="6" DockState="Document" ActiveContent="6">
+          <Contents Count="1">
+            <Content ID="0" RefID="6" />
+          </Contents>
+        </Pane>
+      </Panes>
+      <DockWindows>
+        <DockWindow ID="0" DockState="Document" ZOrderIndex="1">
+          <NestedPanes Count="7">
+            <Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+            <Pane ID="1" RefID="1" PrevPane="0" Alignment="Top" Proportion="0.232044198895028" />
+            <Pane ID="2" RefID="2" PrevPane="1" Alignment="Right" Proportion="0.5" />
+            <Pane ID="3" RefID="3" PrevPane="0" Alignment="Top" Proportion="0.304347826086957" />
+            <Pane ID="4" RefID="4" PrevPane="3" Alignment="Right" Proportion="0.5" />
+            <Pane ID="5" RefID="5" PrevPane="0" Alignment="Right" Proportion="0.5" />
+            <Pane ID="6" RefID="6" PrevPane="5" Alignment="Bottom" Proportion="0.5" />
+          </NestedPanes>
+        </DockWindow>
+        <DockWindow ID="1" DockState="DockLeft" ZOrderIndex="2">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="2" DockState="DockRight" ZOrderIndex="3">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="3" DockState="DockTop" ZOrderIndex="4">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="4" DockState="DockBottom" ZOrderIndex="5">
+          <NestedPanes Count="0" />
+        </DockWindow>
+      </DockWindows>
+      <FloatWindows Count="0" />
+    </DockPanel>
+  </WindowLayout>
+  <Visualization3D userCentroidsVisible="True" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="False" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16">
+    <Camera>
+      <Position x="4.160457" y="-3.979393" z="3.110965" />
+      <Orientation yaw="44.00174" pitch="-24.00056" />
+    </Camera>
+  </Visualization3D>
+</IisuInteractionDesignerProject>

@@ -1,0 +1,2311 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>iisuNet</name>
+    </assembly>
+    <members>
+        <member name="T:Iisu.IDevice">
+            <summary>
+               iisu main communication class. The SkDevice is an object that hides the entire
+               iisu processing.
+            </summary>
+        </member>
+        <member name="M:Iisu.IDevice.GetDataNameCollection(System.Boolean)">
+            <summary>
+            Get a list containing strings of available data.
+            </summary>
+            <param name="onlyRegistredData">if set to <c>true</c> [only registered data].</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.GetDataType(System.String)">
+            <summary>
+            Get the type of a data or a parameter
+            </summary>
+            <param name="path">path of the data/parameter.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.GetParameterType(System.String)">
+            <summary>
+            Get the type of a parameter
+            </summary>
+            <param name="path">path of the parameter.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.GetParametersNameCollection">
+            <summary>
+            Get a list containing strings available parameters.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.RegisterDataHandle``1(System.String)">
+            <summary>
+            Register data and return related data handle
+            </summary>
+            <typeparam name="T">type of the data</typeparam>
+            <param name="path">The path to the data</param>
+            <returns>the data handle</returns>
+        </member>
+        <member name="M:Iisu.IDevice.RegisterParameterHandle``1(System.String)">
+            <summary>
+            Register data and return related parameter handle
+            </summary>
+            <typeparam name="T">type of parameter</typeparam>
+            <param name="path">The path to the parameter</param>
+            <returns>the parameter handle</returns>
+        </member>
+        <member name="M:Iisu.IDevice.GetMetaInfo(System.String)">
+            <summary>
+            Gets the meta info related to a data path.
+            </summary>
+            <param name="dataPath">The data path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.GetAttributes(System.String)">
+            <summary>
+            Gets the attributes related to data path.
+            </summary>
+            <param name="dataPath">The data path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDevice.Start">
+            <summary>
+            Start the processing of frames
+            </summary>
+        </member>
+        <member name="M:Iisu.IDevice.Stop(System.Boolean)">
+            <summary>
+            Stop the device.
+            </summary>
+            <param name="waitForStopped">if set to <c>true</c> [wait for device to be stopped].</param>
+        </member>
+        <member name="M:Iisu.IDevice.UpdateFrame(System.Boolean)">
+            <summary>
+            Tells the device to acquire the next frame, if the device is running synchronously, the processing will occure in this method call.
+            </summary>
+            <param name="waitForNewFrame">if this is set to true, the call will block until a new frame is available</param>
+            <returns>true if a new frame is available</returns>
+        </member>
+        <member name="M:Iisu.IDevice.ReleaseFrame">
+            <summary>
+            signifies the device that processing of the current frame is done and release its resources
+            </summary>
+        </member>
+        <member name="M:Iisu.IDevice.LockFrame">
+            <summary>
+            signifies the device that processing of the current frame is locked for all future UpdateFrame until ReleaseFrame is called
+            </summary>
+        </member>
+        <member name="P:Iisu.IDevice.CommandManager">
+            <summary>
+            allows access to the related <see cref="T:Iisu.ICommandManager"/> which allows you to send commands to iisu
+            </summary>
+        </member>
+        <member name="P:Iisu.IDevice.EventManager">
+            <summary>
+            allows access to the related <see cref="T:Iisu.IEventManager"/> which allows you to listen to events from to iisu
+            </summary>
+        </member>
+        <member name="P:Iisu.IDevice.FrameId">
+            <summary>
+            Get the number of the latest processed frame
+            </summary>
+            <value>The frame number.</value>
+        </member>
+        <member name="P:Iisu.IDevice.Status">
+            <summary>
+                Get the bitmask status of the device, use it with eDeviceStatusMask to get
+                a specific device state value.
+            </summary>
+            <value>status of the device.</value>
+        </member>
+        <member name="M:Iisu.PInvoke.DeviceImpl.#ctor(System.IntPtr)">
+            <summary>
+            Only used when initializing a device from an existing Native Device
+            </summary>
+            <param name="devicePtr"></param>
+        </member>
+        <member name="T:Iisu.IDataHandle`1">
+            <summary>
+            The data handle is used to retrieve the latest values of a registered data
+            </summary>
+            <typeparam name="T">The datatype of the data</typeparam>
+        </member>
+        <member name="M:Iisu.IDataHandle`1.GetMetaInfo">
+            <summary>
+            Gets the meta info related to a data path.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IDataHandle`1.Unregister">
+            <summary>
+            Unregister this instance of data handle.
+            </summary>
+        </member>
+        <member name="P:Iisu.IDataHandle`1.Path">
+            <summary>
+            gives you the path to data
+            </summary>
+        </member>
+        <member name="P:Iisu.IDataHandle`1.Value">
+            <summary>
+            The current value of the data
+            </summary>
+        </member>
+        <member name="P:Iisu.IDataHandle`1.Valid">
+            <summary>
+            TODO: clarify the description of this with the sdk
+            </summary>
+        </member>
+        <member name="P:Iisu.IDataHandle`1.IsDataAutoupdated">
+            <summary>
+            Gets or sets a value indicating the related data from iisu is updated.
+            </summary>
+            <value>
+            	<c>true</c> if Value is updated when an new data is acquired; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Iisu.Data.Quaternion">
+            <summary>
+            Represents a quaternion.  Basically a quaternion is a 4D complex number as well
+            as an efficient way to represent rotations in 3-space.
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.X">
+            <summary>
+            get the x (real?) component
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.Y">
+            <summary>
+            get the y (real?) component
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.Z">
+            <summary>
+            get the z (real?) component
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.W">
+            <summary>
+            get the w (imaginary?) component
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Create a quaternion by specifying its components in cartesian space
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.Clone">
+            <summary>
+            Clone this quaternion.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.System#ICloneable#Clone">
+            <summary>
+            private interface implementation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.FromAxisAngle(Iisu.Data.Vector3,System.Single)">
+            <summary>
+            Create a quaternion given an axis and a rotation around that axis
+            </summary>
+            <param name="axis"></param>
+            <param name="radians"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.FromAxisAngle(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Create a quaternion given an axis and a rotation around that axis
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="fRadians"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.FromMatrix4(Iisu.Data.Matrix4)">
+            <summary>
+            Create a quaternion from a 3D homogeneous transform
+            </summary>
+            <param name="xfrm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Explicit(Iisu.Data.Matrix4)~Iisu.Data.Quaternion">
+            <summary>
+            Cast a matrix to a quaternion
+            </summary>
+            <param name="xfrm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetAxisAngle(Iisu.Data.Vector3@,System.Single@)">
+            <summary>
+            Extract the quaternion's it's axis and corresponding rotation.
+            </summary>
+            <param name="axis"></param>
+            <param name="radians"></param>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Equality(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            Are two quaterions equal?
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Inequality(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            Are two quaterions not equal?
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.Equals(System.Object)">
+            <summary>
+            Is given object equal to current quaterions?
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetHashCode">
+            <summary>
+            Get the hashcode of the Quaternion
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Addition(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            add two quaternions
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Subtraction(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            subtract two quaternions
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Multiply(Iisu.Data.Quaternion,System.Single)">
+            <summary>
+            multiply quaternion by a real number
+            </summary>
+            <param name="a"></param>
+            <param name="scale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Division(Iisu.Data.Quaternion,System.Single)">
+            <summary>
+            divide quaternion by a real number
+            </summary>
+            <param name="a"></param>
+            <param name="divisor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Multiply(Iisu.Data.Quaternion,Iisu.Data.Vector3)">
+            <summary>
+            rotate point by quaternion
+            </summary>
+            <param name="a"></param>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.op_Multiply(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            rotate quaternion by another quaterion
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetConjugate">
+            <summary>
+            get the conjugate of this quaternion (UNVERIFIED)
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetInverse">
+            <summary>
+            get the inverse of this quaternion (UNVERIFIED) 
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetUnitInverse">
+            <summary>
+            get the unit inverse of this quaternion (UNVERIFIED) 
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetMagnitude">
+            <summary>
+            Get the magnitude of the quaternion
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetMagnitudeSquared">
+            <summary>
+            Get the squared magnitude of the quaternion
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.Normalize">
+            <summary>
+            Scale quaternion so it's magnitude is one.
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.GetUnit">
+            <summary>
+            Get a parallel unit quaternion.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.Rotate(Iisu.Data.Vector3)">
+            <summary>
+            Rotate a vector using this quaternion
+            </summary>
+            <returns>the rotated vector</returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.DotProduct(Iisu.Data.Quaternion,Iisu.Data.Quaternion)">
+            <summary>
+            Calculate the dot product (inner product) between two quaternions
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.Slerp(Iisu.Data.Quaternion,Iisu.Data.Quaternion,System.Single)">
+            <summary>
+            Get the spherically interpolated quaternion at position t between
+            a and b (UNVERIFIED)
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Quaternion.ToString">
+            <summary>
+            Get a string representation of the quaternion
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.Identity">
+            <summary>
+            Identity (0,0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.Zero">
+            <summary>
+            Zero (0,0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.Origin">
+            <summary>
+            Origin (0,0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.XAxis">
+            <summary>
+            X-axis unit vector (1,0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.YAxis">
+            <summary>
+            Y-axis unit vector (0,1,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.ZAxis">
+            <summary>
+            Z-axis unit vector (0,0,1,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Quaternion.WAxis">
+            <summary>
+            W-axis unit vector (0,0,0,1)
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.Quaternion.Item(System.Int32)">
+            <summary>
+            An index accessor that maps [0] -> X, [1] -> Y, [3] -> Z and [3] -> W.
+            </summary>
+        </member>
+        <member name="T:Iisu.IHandle">
+            <summary>
+            The handle to the iisu runtime from which you can create an <see cref="T:Iisu.IDevice"/>
+            </summary>
+        </member>
+        <member name="M:Iisu.IHandle.InitializeDevice">
+            <summary>
+            Create a device
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IHandle.GetDevice">
+            <summary>
+            Get the handle's related device. The device must have been initialized first using Handle.InitializeDevice(...)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IHandle.InitializeDevice(Iisu.IApplicationConfigurator)">
+            <summary>
+            Create a device using the given configurator object
+            </summary>
+            <param name="configurator"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.IHandle.Version">
+            <summary>
+            return the version number of the iisu runtime
+            </summary>
+        </member>
+        <member name="P:Iisu.IHandle.LicenseExpirationDate">
+            <summary>
+            The expiration date of this iisu installation. Null if permanent.
+            </summary>
+        </member>
+        <member name="P:Iisu.IHandle.CommandManager">
+            <summary>
+            return a <see cref="T:Iisu.ICommandManager"/> which allows to send commands to iisu
+            </summary>
+        </member>
+        <member name="P:Iisu.IHandle.EventManager">
+            <summary>
+            return a <see cref="T:Iisu.IEventManager"/> which allows to listen to iisu events
+            </summary>
+        </member>
+        <member name="T:Iisu.ICommandManager">
+            <summary>
+            The Command manager allows you to send command to the whole iisu system, It is the primary mean of communication with the different cells.
+            </summary>
+            <example>
+            <code>
+            		//send a command with a boolean parameter and no return value
+            		commandManager.SendCommand("start", true);
+            
+            		//send a command with a return value and block on the result
+            		string[] result = commandManager.SendCommand&lt;string[]gt;("SYSTEM.CAMERA.getSupportedModels");
+            		return result.WaitForReturnValue();
+            </code>
+            </example>
+        </member>
+        <member name="M:Iisu.ICommandManager.SendCommand``1(System.String,System.Object[])">
+            <summary>
+            Sends a command and handle return value
+            </summary>
+            <typeparam name="T">The type of the return value of the command</typeparam>
+            <param name="command">The command.</param>
+            <param name="parameters">The parameters of the command.</param>
+            <returns>an ICommandManagerOperation allowing you to retrieve the return value of the command</returns>
+            <remarks>
+            non-blocking, does not wait the completion of command. return value can be used for that purpose
+            </remarks>
+        </member>
+        <member name="M:Iisu.ICommandManager.SendCommand(System.String,System.Object[])">
+            <summary>
+            Sends the command and drop return value.
+            </summary>
+            <remarks>
+            non-blocking, does not wait the completion of command
+            </remarks>
+            <param name="command">The command.</param>
+            <param name="parameters">The parameters of the command.</param>
+        </member>
+        <member name="M:Iisu.ICommandManager.GetCommandsNameCollection">
+            <summary>
+            get the list of all supported commands
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.ICommandManager.GetMetaInfo(System.String)">
+            <summary>
+            Gets the meta info related to given iisu command
+            </summary>
+            <param name="command">The command.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.ICommandManager.GetAttributes(System.String)">
+            <summary>
+            Gets the attributes related to given iisu command
+            </summary>
+            <param name="command">The command.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.PInvoke.CommandManagerImpl.#ctor(System.IntPtr)">
+            <summary>
+            Only used when initializing iisuNet from an existing native device.
+            </summary>
+            <param name="devicePtr"></param>
+        </member>
+        <member name="T:Iisu.PInvoke.CommandManagerImpl.NativeDataFactory">
+            <summary>
+            this class creates native object from managed ones
+            </summary>
+            <example>
+            string => SkString pointer
+            </example>
+        </member>
+        <member name="T:Iisu.ICommandManagerOperation`1">
+            <summary>
+            Allows to retrieve a command's return value (synchronously or asynchronously) 
+            see: <see cref="T:Iisu.ICommandManager"/>
+            </summary>
+            <typeparam name="T">type of command return value</typeparam>
+        </member>
+        <member name="M:Iisu.ICommandManagerOperation`1.WaitForReturnValue">
+            <summary>
+            Retrieve the return value of the command, blocking if necessary.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.ICommandManagerOperation`1.IsReturnValueReady">
+            <summary>
+            Check if the return value of the command is ready
+            </summary>
+            <returns><code>true</code> if the command is the value is ready</returns>
+        </member>
+        <member name="M:Iisu.ICommandManagerOperation`1.TryGetReturnValue(`0@)">
+            <summary>
+            Try to get the return value of the command (non blocking)
+            </summary>
+            <param name="val">the return value of the command if the return value is <code>true</code> or <code>default(T)</code></param>
+            <returns><code>true</code> if the value was ready</returns>
+        </member>
+        <member name="T:Iisu.Data.Skeleton">
+            <summary>
+            struct to represent skeleton data from iisu
+            </summary>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.CreateApplicationLibrary">
+            <summary>
+            Creates a CommonLibrary object for use from an application, as opposed to from a server.
+            </summary>
+            <returns>A CommonLibrary object that uses an application mode handle</returns>
+            <exception cref="T:FlexNet.InitException">Throws InitException if the library initialization fails.</exception>
+            <exception cref="T:FlexNet.OpenHandleException">Throws OpenHandleException if opening the activation api handle fails.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.InitializeLibrary">
+            <summary>
+            Initialization required to use the activation library and the Activation API.
+            </summary>
+            <exception cref="T:FlexNet.InitException">Throws InitException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.OpenHandle(FlexNet.ActivationModes)">
+            <summary>
+            Opens an Activation API handle.
+            </summary>
+            <exception cref="T:FlexNet.OpenHandleException">Throws OpenHandleException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.CloseHandle">
+            <summary>
+            Closes the currently open handle created with OpenClientHandle.
+            </summary>
+            <exception cref="T:FlexNet.CloseHandleException">Throws CloseHandleException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.Cleanup">
+            <summary>
+            Release the activation library.
+            </summary>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.GetLastError">
+            <summary>
+            Gets the latest error for the last operation.
+            </summary>
+            <returns>Resulting ActivationError.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.GetLastErrorDescription">
+            <summary>
+            Gets the latest error string for the last operation.
+            </summary>
+            <returns>String description of the error.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.GetDescriptionForEnum(System.Enum)">
+            <summary>
+            Get the description string from the enum value.
+            </summary>
+            <param name="value">An enumeration value.  This is not required to have a description defined.</param>
+            <returns>The description for the value if available, otherwise the string name of the enum value.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.SetActivationServer(System.String)">
+            <summary>
+            Stores the address of the activation server to be used for subsequent activation transactions that require a server.
+            </summary>
+            <param name="serverAddress">The address of the activation server.  For FlexNet License server use port@host or @host.  For FlexNet Operations server use full URL ex: http://servername/page</param>
+            <exception cref="T:FlexNet.SetServerException">Throws SetServerException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.GetActivationServer">
+            <summary>
+            Returns the address of the activation server to which activation transactions will be sent.
+            </summary>
+            <returns>The activation server address or NULL if it has not been previously set.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.SetCommunicationType(FlexNet.CommunicationTypes)">
+            <summary>
+            Sets the type of communication used for the connection to the activation server used for transactions.
+            </summary>
+            <param name="communicationType">The type of communication required. Set this in relation to the type of activation server.</param>
+            <exception cref="T:FlexNet.SetCommunicationTypeException">Throws SetCommunicationTypeException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.GetCommunicationType">
+            <summary>
+            Gets the type of communication used for the connection to the activation server.
+            </summary>
+            <returns>The type of communcations required. Set this in relation to the type of activation server.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.SetStatusCallback(FlexNet.CommonLibrary.StatusCallback,System.IntPtr)">
+            <summary>
+            Sets the callback for status messages.
+            </summary>
+            <param name="callback">The delegate method.</param>
+            <param name="callerData">Optional data.</param>
+            <exception cref="T:FlexNet.SetCallbackException">Throws SetCallbackException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.SetProxy(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Proxy server details for communication to an Operations server.
+            </summary>
+            <param name="host">The name of the proxy server.</param>
+            <param name="port">The proxy server port.</param>
+            <param name="userName">Optional user name.  Set to null when not required.</param>
+            <param name="password">Optional password.  Set to null when not required.</param>
+            <exception cref="T:FlexNet.SetProxyException">Throws SetProxyException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonLibraryInit(System.String)">
+            <summary>
+            Initialization required to use the activation library and the Activation API.
+            </summary>
+            <param name="runtimepath">The path and file name for the activation library. When set to NULL, the default value is used.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleOpen(System.IntPtr@,FlexNet.ActivationModes,FlexNet.ActivationError@)">
+            <summary>
+            Creates an Activation API handle.
+            </summary>
+            <param name="handle">The resulting pointer to the newly opened Activation API handle.</param>
+            <param name="mode">Defines the mode in which the activation utility using this handle executes.</param>
+            <param name="error">Resulting error code, if any.</param>
+            <returns>Returns True on success and False on Failure.  On Failure details are in the error parameter.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleClose(System.IntPtr)">
+            <summary>
+            Closes an activation handle.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen</param>
+            <returns>True on success and False on failure.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonLibraryCleanup">
+            <summary>
+            Release the activation library.
+            </summary>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleGetError(System.IntPtr,FlexNet.ActivationError@)">
+            <summary>
+            Gets the latest error code for the last operation performed using the specified handle.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen</param>
+            <param name="error">Resulting error code, if any.</param>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleSetRemoteServer(System.IntPtr,System.String)">
+            <summary>
+            Stores the address of the activation server to be used for subsequent activation transactions that require a server.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <param name="targetServer">The address of the activation server.</param>
+            <returns>Returns True on success and False on failure.  On failure call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleGetRemoteServer(System.IntPtr)">
+            <summary>
+            Returns the address of the activation server to which activation transactions will be sent.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <returns>The activation server address or NULL if it has not been previously set.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleSetCommType(System.IntPtr,FlexNet.CommunicationTypes)">
+            <summary>
+            Sets the type of communication used for the connection to the activation server used for transactions.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <param name="communicationType">The type of comms required. Set this in relation to the type of activation server.</param>
+            <returns>Returns True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleGetCommType(System.IntPtr)">
+            <summary>
+            Gets the type of communication used for the connection to the activation server.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <returns>The type of communcations required. Set this in relation to the type of activation server.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleSetStatusCallback(System.IntPtr,FlexNet.CommonLibrary.StatusCallback,System.IntPtr)">
+            <summary>
+            Sets a callback that reports changes in status of transactions in progress on a SOAP connection.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <param name="callback">Pointer to the callback function. See FLX_STATUS_CALLBACK for a typedef of this function.</param>
+            <param name="callerData">Optional data passed to the callback function. This is input to the callback function as pUserData, see FLX_STATUS_CALLBACK for details.</param>
+            <returns>Returns True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleSetProxyDetails(System.IntPtr,System.UInt64,System.String,System.String,System.String)">
+            <summary>
+            Sets the proxy server details when using a SOAP connection.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <param name="port">The proxy server port number.</param>
+            <param name="host">The name of the proxy server.</param>
+            <param name="userid">Optionally, when the proxy server requires authentication, a user name. Set this to NULL when authentication is not required.</param>
+            <param name="password">Optionally, when the proxy server requires authentication, a password. Set this to NULL when authentication is not required.</param>
+            <returns>Returns True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.flxActCommonHandleGetLastOpsErrorString(System.IntPtr)">
+            <summary>
+            Gets text that explains the last error code returned by the FlexNet Operations server.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <returns>The FlexNet Operations server error text or NULL if no error text is available.</returns>
+        </member>
+        <member name="M:FlexNet.CommonLibrary.Dispose">
+            <summary>
+            Closes an activtion api handle if it is open and releases the library.
+            </summary>
+            <exception cref="T:FlexNet.CloseHandleException">Thorws CloseHandleException if the handle fails to close.</exception>
+        </member>
+        <member name="F:FlexNet.ActivationError.majorError">
+            <summary>
+            Major error code, get information from error types.h
+            </summary>
+        </member>
+        <member name="F:FlexNet.ActivationError.minorErrorNo">
+            <summary>
+            Corresponds to code location - source of error
+            </summary>
+        </member>
+        <member name="F:FlexNet.ActivationError.systemErrorNo">
+            <summary>
+            Corresponds to system or 3rd party library error code
+            </summary>
+        </member>
+        <member name="F:FlexNet.CommunicationTypes.licenseServer">
+            <summary>
+            FlexNet License Server System
+            </summary>
+        </member>
+        <member name="F:FlexNet.CommunicationTypes.operationsServer">
+            <summary>
+            FlexNet Operations Server
+            </summary>
+        </member>
+        <member name="T:Iisu.Accessibility">
+            <summary>
+            Indicates whether the object is public or not.
+            </summary>
+        </member>
+        <member name="F:Iisu.Accessibility.Private">
+            <summary>
+            the object is private
+            </summary>
+        </member>
+        <member name="F:Iisu.Accessibility.Public">
+            <summary>
+            the object is public
+            </summary>
+        </member>
+        <member name="T:Iisu.Lifecycle">
+            <summary>
+            Indicates if a data/parameter is serializable.
+            </summary>
+        </member>
+        <member name="F:Iisu.Lifecycle.Transient">
+            <summary>
+            the object is transient (not serializable)
+            </summary>
+        </member>
+        <member name="F:Iisu.Lifecycle.Serializable">
+            <summary>
+            the object can be serialized
+            </summary>
+        </member>
+        <member name="T:Iisu.Permission">
+            <summary>
+            Indicates if the data/parameter is read-only.
+            </summary>
+        </member>
+        <member name="F:Iisu.Permission.ReadOnly">
+            <summary>
+            the data/parameter is read-only
+            </summary>
+        </member>
+        <member name="F:Iisu.Permission.ReadWrite">
+            <summary>
+            the data/parameter is can read and modified
+            </summary>
+        </member>
+        <member name="T:Iisu.Ownership">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="F:Iisu.Ownership.Internal">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="F:Iisu.Ownership.External">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="T:Iisu.NodeType">
+            <summary>
+            Indicates the type of the object
+            </summary>
+        </member>
+        <member name="F:Iisu.NodeType.Data">
+            <summary>
+            the object is a Data
+            </summary>
+        </member>
+        <member name="F:Iisu.NodeType.Parameter">
+            <summary>
+            the object is a Parameter
+            </summary>
+        </member>
+        <member name="F:Iisu.NodeType.Command">
+            <summary>
+            the object is a Command
+            </summary>
+        </member>
+        <member name="F:Iisu.NodeType.Event">
+            <summary>
+            the object is a Event
+            </summary>
+        </member>
+        <member name="F:Iisu.NodeType.Mask">
+            <summary>
+            the object is a Mask
+            </summary>
+        </member>
+        <member name="T:Iisu.Consistence">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="F:Iisu.Consistence.Constant">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="F:Iisu.Consistence.Volatile">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="F:Iisu.Consistence.Mutable">
+            <summary>
+            Internal  Use
+            </summary>
+        </member>
+        <member name="T:Iisu.Synchronicity">
+            <summary>
+            Indicates whether the command/event can only happen in between pulses(frames) or not.
+            </summary>
+        </member>
+        <member name="F:Iisu.Synchronicity.System">
+            <summary>
+            It can happen anytime
+            </summary>
+        </member>
+        <member name="F:Iisu.Synchronicity.InterPulse">
+            <summary>
+            It can only happen in between pulses(frames)
+            </summary>
+        </member>
+        <member name="T:Iisu.IAttributes">
+            <summary>
+            contains attributes describing the related object
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Accessibility">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Accessibility"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Consistence">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Consistence"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Lifecycle">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Lifecycle"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.NodeType">
+            <summary>
+            <see cref="P:Iisu.IAttributes.NodeType"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Ownership">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Ownership"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Permission">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Permission"/>
+            </summary>
+        </member>
+        <member name="P:Iisu.IAttributes.Synchronicity">
+            <summary>
+            <see cref="P:Iisu.IAttributes.Synchronicity"/>
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Color4F">
+            <summary>
+            RGBA Color class
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Color4F.#ctor(Iisu.Data.Color4F)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Iisu.Data.Color4F"/> struct.
+            </summary>
+            <param name="c1">The c1.</param>
+        </member>
+        <member name="M:Iisu.Data.Color4F.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Iisu.Data.Color4F"/> struct.
+            </summary>
+            <param name="r">The red component.</param>
+            <param name="g">The green component.</param>
+            <param name="b">The blue component.</param>
+            <param name="a">the alpha component.</param>
+        </member>
+        <member name="M:Iisu.Data.Color4F.Set(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specified color
+            </summary>
+            <param name="r">The red component.</param>
+            <param name="g">The green component.</param>
+            <param name="b">The blue component.</param>
+            <param name="a">A.</param>
+        </member>
+        <member name="M:Iisu.Data.Color4F.ToString">
+            <summary>
+            returns a string representation of this Color4F instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.Data.Color4F.R">
+            <summary>
+            Gets or sets the red component.
+            </summary>
+            <value>The Red component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4F.G">
+            <summary>
+            Gets or sets the green component.
+            </summary>
+            <value>The Green component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4F.B">
+            <summary>
+            Gets or sets the blue component.
+            </summary>
+            <value>The Blue component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4F.A">
+            <summary>
+            Gets or sets the alpha component.
+            </summary>
+            <value>The alpha component.</value>
+        </member>
+        <member name="T:Iisu.IContext">
+            <summary>
+            The IContext allows you to create a IHandle instance related to a specific iisu installation using an IConfigurator object
+            <example>
+            	IHandle handle = Iisu.Iisu.Context.CreateHandle();
+            	//or
+            	IHandle handle2 = Iisu.Iisu.Context.CreateHandle(Iisu.Iisu.CreateConfigurator("config.xml");
+            </example>
+            </summary>
+        </member>
+        <member name="M:Iisu.IContext.CreateHandle">
+            <summary>
+            allows you to create a handle to an iisu installation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FlexNet.ProductLicenseSpecification">
+            <summary>
+            Wrapper class for FlexNet Product License Specification object.
+            </summary>
+        </member>
+        <member name="T:FlexNet.FlexObject">
+            <summary>
+            Abstract base class for FlexNet handles.  The various handle-based objects are
+            all sub-classed off of this.
+            </summary>
+        </member>
+        <member name="M:FlexNet.FlexObject.#ctor(FlexNet.CommonLibrary,FlexNet.FlexObject.CleanupDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="appLibrary">CommonLibrary object used by sub-classes.</param>
+            <param name="cleanup">
+            Delegate for the FlexNet function to call to delete the handle.  Note that the
+            delegate function is the actual CDecl function in the FlexNet DLL.
+            </param>
+        </member>
+        <member name="M:FlexNet.FlexObject.GetHandle">
+            <summary>
+            Accessor function to access FlexNet handle.
+            </summary>
+            <returns>IntPtr object representing the FlexNet handle.</returns>
+        </member>
+        <member name="M:FlexNet.FlexObject.Dispose">
+            <summary>
+            Deletes the Flex object if it exists.
+            </summary>
+        </member>
+        <member name="M:FlexNet.FlexObject.Dispose(System.Boolean)">
+            <summary>
+            Calls the HandleDelete cleanup delegate function passed into the constructor,
+            as long as that is non-null and the handle itself is non-zero.
+            </summary>
+            <param name="disposing">
+            Indicates whether this is being called from Dispose or from the destructor.  Dispose
+            uses true, and the destructor uses false.  When set to true, all managed and unmanaged
+            resources will be disposed.  When set to false, only unmanaged resources will be
+            disposed.  Since the only resource in this abstract class is unmanaged, the value
+            is ignored.
+            </param>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.#ctor(FlexNet.CommonLibrary,System.IntPtr)">
+            <summary>
+            Creates a ProductLicenseSpecification based on the given handle.  Note that unlike other
+            handle wrapper classes, there is no deletion function for Product License Specification
+            handles, so this class uses null for the Cleanup delegate.
+            </summary>
+            <param name="appLibrary">A CommonLibrary object</param>
+            <param name="handle">A handle returned by <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcGet(System.IntPtr,System.Int32)"/>.</param>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetFulfillmentId">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFulfillmentIdGet(System.IntPtr)"/>.
+            </summary>
+            <returns>The fulfillment ID string.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetFeatureLines">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFeatureLineGet(System.IntPtr)"/>.
+            </summary>
+            <returns>The activated feature lines.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetTrustFlags">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcTrustFlagsGet(System.IntPtr)"/>.
+            </summary>
+            <returns>The trust flags.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetFulfillmentType">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFulfillmentTypeGet(System.IntPtr)"/>.
+            </summary>
+            <returns>The fulfillment type.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetProductId">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcProductIdGet(System.IntPtr)"/>
+            </summary>
+            <returns>The product ID</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetEntitlementId">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcEntitlementIdGet(System.IntPtr)"/>
+            </summary>
+            <returns>The entitlement ID or NULL if not set</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetSuiteId">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcSuiteIdGet(System.IntPtr)"/>
+            </summary>
+            <returns>The suite ID or NULL if not set</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.GetExpirationDate">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcExpDateGet(System.IntPtr)"/>
+            </summary>
+            <returns>The expiration date or NULL if not set or Permanent</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.IsPermanent">
+            <summary>
+            Is the license permanent or not.
+            </summary>
+            <returns>true if the license is permanent false if the date is not set or if a specific date is set</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.IsDisabled">
+            <summary>
+            See <see cref="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcIsDisabled(System.IntPtr)"/>
+            </summary>
+            <returns>true if disabled false otherwise</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.ToString">
+            <summary>
+            Format and output the contents of this product license specifcation.
+            </summary>
+            <returns>The formatted contents.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFeatureLineGet(System.IntPtr)">
+            <summary>
+            Returns the number of fulfillment records in the license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The activated feature lines from the fulfillment record, or NULL if not set.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFulfillmentIdGet(System.IntPtr)">
+            <summary>
+            Returns the number of fulfillment records in the license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The fulfillment ID from the fulfillment record or NULL if not set.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcTrustFlagsGet(System.IntPtr)">
+            <summary>
+            Get the trust status of the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The trust status from the fulfillment record or NULL if not set. See Discussion for an explanation of this value.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcFulfillmentTypeGet(System.IntPtr)">
+            <summary>
+            Get the fulfillment type from the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The type of "transaction" used to place this fulfillment record in trusted storage. For details of valid values, see flxFulfillmentType.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcProductIdGet(System.IntPtr)">
+            <summary>
+            Get the product ID from the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The product ID from the fulfillment record or NULL if not set.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcEntitlementIdGet(System.IntPtr)">
+            <summary>
+            Get the entitlement ID from the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The entitlement ID from the fulfillment record or NULL if not set.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcSuiteIdGet(System.IntPtr)">
+            <summary>
+            Get the suite ID from the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The suite ID from the fulfillment record or NULL if not set.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcExpDateGet(System.IntPtr)">
+            <summary>
+            Get the expiration date from the fulfillment record in the supplied product license specification.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>The expiration date from the fulfillment record or NULL if not set. The format is dd-mmm-yyyy.</returns>
+        </member>
+        <member name="M:FlexNet.ProductLicenseSpecification.flxActCommonProdLicSpcIsDisabled(System.IntPtr)">
+            <summary>
+            Returns the status of the specified fulfillment record.
+            </summary>
+            <param name="prodLicenseSpecHandle">A product license specification that contains a fulfillment record.</param>
+            <returns>true if disabled false otherwise</returns>
+        </member>
+        <member name="T:FlexNet.LicenseNotFoundException">
+            <summary>
+            Raised when the there is no license (trusted storage is empty).
+            </summary>
+        </member>
+        <member name="T:FlexNet.InvalidFeatureException">
+            <summary>
+            Raised when a feature is not present in the trusted storage.
+            </summary>
+        </member>
+        <member name="T:FlexNet.InvalidFeatureVersionException">
+            <summary>
+            Raised when a feature does not have the correct version.
+            </summary>
+        </member>
+        <member name="T:FlexNet.InvalidProductLicenseSpecification">
+            <summary>
+            Raised when a license cannot be trusted (e.g: system clock has been changed, ...).
+            </summary>
+        </member>
+        <member name="T:FlexNet.LicenseSpecification">
+            <summary>
+            Wrapper class for FlexNet License Specification object.
+            </summary>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.#ctor(FlexNet.CommonLibrary)">
+            <summary>
+            Creates a license specification object.  See <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcCreate(System.IntPtr,System.IntPtr@)"/> description for more details.
+            </summary>
+            <param name="appLibrary">A CommonLibrary object</param>
+            <exception cref="T:FlexNet.CreateLicenseSpecException">Throws a CreateLicenseSpecException on failure to create the license specification.</exception>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.PopulateFromTrustedStorage">
+            <summary>
+            See <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcPopulateFromTS(System.IntPtr)"/>.
+            </summary>
+            <exception cref="T:FlexNet.LicenseSpecPopulateFromTSException">Throws LicenseSpecPopulateFromTSException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.PopulateAllFromTrustedStorage">
+            <summary>
+            See <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcPopulateAllFromTS(System.IntPtr)"/>.
+            </summary>
+            <exception cref="T:FlexNet.LicenseSpecPopulateAllFromTSException">Throws LicenseSpecPopulateAllFromTSException on failure.</exception>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.GetNumberProducts">
+            <summary>
+            See <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcGetNumberProducts(System.IntPtr)"/>.
+            </summary>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.GetProduct(System.Int32)">
+            <summary>
+            See <see cref="M:FlexNet.LicenseSpecification.flxActCommonLicSpcGet(System.IntPtr,System.Int32)"/>.
+            </summary>
+            <exception cref="T:FlexNet.LicenseSpecGetException">Throws LicenseSpecGetException on failure.</exception>
+            <returns>ProductLicenseSpecification object created from the handle returned by flxActCommonLicSpcGet.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcCreate(System.IntPtr,System.IntPtr@)">
+            <summary>
+            Creates a license specification. This is a structure that is used to contain and manipulate fulfillment records. A license specification may hold multiple fulfillment records: an individual fulfillment record is contained in a product license specification.
+            </summary>
+            <param name="handle">An activation handle opened with flxActCommonHandleOpen.</param>
+            <param name="licenseSpecHandle">The resulting handle to the license specification.</param>
+            <returns>True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcDelete(System.IntPtr)">
+            <summary>
+            Deletes the specified license specification. All resources associated with the license specification, including any fulfillment records it contains, are freed.
+            </summary>
+            <param name="licenseSpecHandle">The resulting handle to the license specification.</param>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcPopulateFromTS(System.IntPtr)">
+            <summary>
+            Loads valid fulfillment records from trusted storage into the license specification.
+            </summary>
+            <param name="licenseSpecHandle">A license specification created using flxActCommonLicSpcCreate.</param>
+            <returns>True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcPopulateAllFromTS(System.IntPtr)">
+            <summary>
+            Loads all fulfillment records; expired and non-expired; valid and not valid, from trusted storage into the specified license specification.
+            </summary>
+            <param name="licenseSpecHandle">A license specification created using flxActCommonLicSpcCreate.</param>
+            <returns>True on success and False on failure.  Call flxActCommonHandleGetError to find out the specific error.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcGetNumberProducts(System.IntPtr)">
+            <summary>
+            Returns the number of fulfillment records in the license specification.
+            </summary>
+            <param name="licenseSpecHandle">A license specification created using flxActCommonLicSpcCreate.</param>
+            <returns>The number of fulfillment records in the license specification.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseSpecification.flxActCommonLicSpcGet(System.IntPtr,System.Int32)">
+            <summary>
+            Returns the number of fulfillment records in the license specification.
+            </summary>
+            <param name="licenseSpecHandle">A license specification created using flxActCommonLicSpcCreate.</param>
+            <param name="index">The position of the desired fulfillment record where index is in the range 0 through count-1, with 0 being the first fulfillment record. Use flxActCommonLicSpcGetNumberProducts to determine count.</param>
+            <returns>If successful, the fulfillment record is returned in a product license specification object. If not successful, NULL is returned.</returns>
+        </member>
+        <member name="T:Iisu.IParameterHandle`1">
+            <summary>
+            The data handle is used to retrieve and modify the value of a registered parameter
+            </summary>
+            <typeparam name="T">The datatype of the parameter</typeparam>
+        </member>
+        <member name="P:Iisu.IParameterHandle`1.Value">
+            <summary>
+            get or set the value of the parameter
+            </summary>
+        </member>
+        <member name="P:Iisu.IParameterHandle`1.Editable">
+            <summary>
+            return true if the parameter can be modified
+            </summary>
+        </member>
+        <member name="P:Iisu.IParameterHandle`1.Path">
+            <summary>
+            gives you the path of the parameter
+            </summary>
+        </member>
+        <member name="T:Iisu.IEventManager">
+            <summary>
+            The event manager allows to listen to various iisu events
+            </summary>
+        </member>
+        <member name="M:Iisu.IEventManager.GetEventsNameCollection">
+            <summary>
+            a List containing the names of all the events currently available in iisu
+            </summary>
+        </member>
+        <member name="M:Iisu.IEventManager.RegisterEventListener(System.String,System.Delegate)">
+            <summary>
+            Register a delegate to listen on an iisu event. 
+            The delegate signature should match the one of the event (which can be found either in the static class <see cref="T:Iisu.EventDelegates"/> or in the documentation.
+            Once the listener is not needed anymore, you should unregister it using <code>IEventManager.UnregisterEventListener</code>
+            </summary>
+            <example>
+            eventManager.RegisterEventListener("DEVICE.DataFrame", new NewFrame(OnNewFrame));
+            ...
+            public void OnNewFrame(string name, uint frameId)
+            {
+            	Console.WriteLine("new frame received");
+            }
+            </example>
+            <param name="eventName">the name of the event to listen to</param>
+            <param name="dlg">the delegate to call when the event occurs</param>
+        </member>
+        <member name="M:Iisu.IEventManager.UnregisterEventListener(System.String,System.Delegate)">
+            <summary>
+            unregister a listener on an event
+            </summary>
+            <param name="eventName">the name of the event on which the listener was registered</param>
+            <param name="dlg">the delegate that was registered</param>
+        </member>
+        <member name="M:Iisu.IEventManager.GetMetaInfo(System.String)">
+            <summary>
+            Gets the meta info related to given iisu event
+            </summary>
+            <param name="eventName">The event name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.IEventManager.GetAttributes(System.String)">
+            <summary>
+            Gets the attributes related to given iisu event
+            </summary>
+            <param name="eventName">The event name.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Iisu.PInvoke.Interop.FunctionTypeInfoC">
+            <summary>
+            same as SkTypeInfo_C for functions
+            </summary>
+        </member>
+        <member name="P:Iisu.IMetaInfo.Description">
+            <summary>
+            Gets the description.
+            </summary>
+            <value>The description.</value>
+        </member>
+        <member name="T:Iisu.Data.VertexOffset">
+            <summary>
+            Offset in bytes for <c>Vertex</c> class members
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.VertexOffset.Xyz">
+            <summary>
+            offset of XYZ component
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.VertexOffset.Rgba">
+            <summary>
+            offset of RBA component
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.VertexOffset.Position2D">
+            <summary>
+            offset of UV component
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Vertex">
+            <summary>
+            Vertex class (3D position + color + 2D texture coordinates )
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Color4C">
+            <summary>
+            RGBA Color class
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Color4C.#ctor(Iisu.Data.Color4C)">
+            <summary>
+            create a new Color4C from an existing one
+            </summary>
+            <param name="c1">the Color4C to copy</param>
+        </member>
+        <member name="M:Iisu.Data.Color4C.#ctor(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            create a new Color4C
+            </summary>
+            <param name="r">the Red component</param>
+            <param name="g">the Green component</param>
+            <param name="b">the Blue component</param>
+            <param name="a">the Alpha channel</param>
+        </member>
+        <member name="M:Iisu.Data.Color4C.Set(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Sets the specified color
+            </summary>
+            <param name="r">The red component.</param>
+            <param name="g">The green component.</param>
+            <param name="b">The blue component.</param>
+            <param name="a">A.</param>
+        </member>
+        <member name="M:Iisu.Data.Color4C.ToString">
+            <summary>
+            get a string representation of the Color4C instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.Data.Color4C.R">
+            <summary>
+            Gets or sets the red component.
+            </summary>
+            <value>The Red component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4C.G">
+            <summary>
+            Gets or sets the green component.
+            </summary>
+            <value>The Green component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4C.B">
+            <summary>
+            Gets or sets the blue component.
+            </summary>
+            <value>The Blue component.</value>
+        </member>
+        <member name="P:Iisu.Data.Color4C.A">
+            <summary>
+            Gets or sets the alpha component.
+            </summary>
+            <value>The alpha component.</value>
+        </member>
+        <member name="T:Iisu.Data.Matrix4">
+            <summary>
+            4x4 Matrix class
+            </summary>
+        </member>
+        <member name="T:FlexNet.LicenseUtility">
+            <summary>
+            For our use, we assume there is only one license.
+            </summary>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.GetLicensesExpirations">
+            <summary>
+            Return a dictionnary of license name / expiration date pairs.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.GetLicenseExpirationDate">
+            <summary>
+            Return the expiration date. Null if no expiration date.
+            If multiple licenses, get the furthest expiration date (expired or not expired).
+            </summary>
+            <returns>Null if no expiration date (permanent).</returns>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.HasValidLicense">
+            <summary>
+            Check if there is a non expired license with the correct version.
+            If not, a FlexeraException is raised.
+            
+            It should only be used by applications that do not have specific feature.
+            e.g: iisu Advanced Configuration, iisu LaunchPad, ...
+            </summary>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.GetFeatureExpireDays(System.String)">
+            <summary>
+            Get the number of days remaining of the latest expiring feature.
+            
+            WARNING: Make sure you have called Check before calling GetFeatureExpireDays.
+            		 This method does not check for invalid feature.
+            </summary>
+            <returns>The number of days left before expiration, null if permanent.</returns>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.Check(System.String)">
+            <summary>
+            Check if a feature is available (present, with the correct version and not expired).
+            </summary>
+            <param name="featureName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.Check(System.String,System.String,System.Int32)">
+            <summary>
+            If any error occurs, an exception is thrown (InvalidFeatureException, InvalidFeatureVersionException, ...).
+            </summary>
+            <param name="featureName"></param>
+            <param name="version"></param>
+            <param name="quantity"></param>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.GetFeatureExpirationDate(System.String)">
+            <summary>
+            Get the furthest expiration date.
+            </summary>
+            <param name="feature"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FlexNet.LicenseUtility.GetFeatureExpirationDate(System.String,System.Boolean)">
+            <summary>
+            Retrieve all the Product License Specifications that contains featureName with or without the correct version.
+            </summary>
+            <param name="featureName"></param>
+            <param name="versionStrict">If true, only takes licenses with the correct version</param>
+            <returns></returns>
+        </member>
+        <member name="P:FlexNet.LicenseUtility.LicenseExpireDays">
+            <summary>
+            Return the number of days before the furthest expiration of all licenses.
+            Null if no expiration.
+            </summary>
+        </member>
+        <member name="T:Iisu.ErrorCodes">
+            <summary>
+            Represents errors codes of iisu
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Matrix3">
+            <summary>
+            3x3 Matrix class
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Matrix3.#ctor(Iisu.Data.Matrix3)">
+            <summary>
+            create a new matrix3 instance
+            </summary>
+            <param name="m1"></param>
+        </member>
+        <member name="M:Iisu.Data.Matrix3.#ctor(System.Single[])">
+            <summary>
+            create a new matrix3 instance
+            </summary>
+            <param name="content"></param>
+        </member>
+        <member name="M:Iisu.Data.Matrix3.ToString">
+            <summary>
+            get a string representation of this Matrix3 instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Matrix3.ToArray">
+            <summary>
+            get an array copy of this matrix
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.Data.Matrix3.Item(System.Int32,System.Int32)">
+            <summary>
+            get the x, y member of the matrix
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.Data.Matrix3.Item(System.Int32)">
+            <summary>
+            get the n'th item of the matrix
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iisu.Data.Vector4">
+            <summary>
+            4D Vector class
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.Vector4.SquaredLength">
+            <summary>
+            compute and return the Length² which is a less expensive operation than computing the Length.
+            This can be useful when simply comparing 2 vectors.
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.ImageDepthType">
+            <summary>
+            ImageDepthType describes the encoding of an iisuNet.IImageData.
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.IImageData">
+            <summary>
+            an Image from iisu, information about the image can be retrieved using
+            IImageData.ImageInfos
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.IImageData.Resize(Iisu.Data.IImageInfos,System.Boolean)">
+            <summary>
+            Resizes the image.
+            </summary>
+            <param name="infos">The specifications of the resized image.</param>
+            <param name="forceReallocation">if set to <c>true</c> [force reallocation].</param>
+        </member>
+        <member name="P:Iisu.Data.IImageData.ImageInfos">
+            <summary>
+            get information about the Image
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageData.Raw">
+            <summary>
+            get the IntPtr to the content of the image.
+            </summary>
+            <example>
+            here's a code snippet showing how to copy the content of an image in a byte[]
+            
+                        imageRaw = new byte[image.ImageInfos.BytesRaw];
+                        uint byte_size = (uint)image.ImageInfos.BytesRaw;      
+                        Marshal.Copy(image.Raw, imageRaw, 0, (int)image.ImageInfos.BytesRaw);
+            </example>
+        </member>
+        <member name="T:Iisu.Data.IImageInfos">
+            <summary>
+            ImageInfos contain the information about an image
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.Width">
+            <summary>
+            the width of the image in pixels
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.Height">
+            <summary>
+            the height of the image in pixels
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.NumberOfChannels">
+            <summary>
+            the number of channels which constitute the image.
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.DepthType">
+            <summary>
+            this describes the encoding of the image as described by the iisuNet.ImageDepthType enum
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.BytesPerPixel">
+            <summary>
+            return the number of bytes used to represent one pixel (BytesDepth * the number of channels)
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.BytesRaw">
+            <summary>
+            the size in bytes of the image in memory
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.IImageInfos.IsFloating">
+            <summary>
+            is the image represented using floating.
+            </summary>
+        </member>
+        <member name="T:Iisu.PInvoke.Interop.TypeInfoC">
+            <summary>
+            struct that holds type information for type safety
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Vector3">
+            <summary>
+            Represents a location in 3-space
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a new vector set to ( x, y, z )
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.#ctor(System.Single[])">
+            <summary>
+            Creates a new vector set to ( element[0], element[1], element[2] )
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.#ctor(Iisu.Data.Vector3)">
+            <summary>
+            Creates a new vector set to the values of the given vector
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.FromXYZ(System.Single,System.Single,System.Single)">
+            <summary>
+            Create a new vector set to ( x, y, z )
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.FromXYZ(System.Single[])">
+            <summary>
+            Create a new vector set to ( element[0], element[1], element[2] )
+            </summary>
+            <param name="elements"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.ProjectOnAxis(Iisu.Data.Vector3)">
+            <summary>
+            Project this vector as a point on the vector direction
+            </summary>
+            <param name="direction"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Set(System.Single,System.Single,System.Single)">
+            <summary>
+            Set the X, Y and Z coordinates of the vector at once.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Set(Iisu.Data.Vector3)">
+            <summary>
+            Set the vector to the same location as the given vector
+            </summary>
+            <param name="vec"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.System#ICloneable#Clone">
+            <summary>
+            this is a private implementation of an Interface
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Clone">
+            <summary>
+            Create a copy of this vector
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.System#IComparable#CompareTo(System.Object)">
+            <summary>
+            this is a private implementation of an Interface
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.CompareTo(Iisu.Data.Vector3)">
+            <summary>
+            compares the magnitude of this instance against the 
+            magnitude of the supplied vector.  
+            </summary>
+            <param name="vec">The vector to compare this instance with.</param>
+            <returns>Less than 0: The magnitude of this instance is less than the magnitude of point.
+            Zero: The magnitude of this instance equals the magnitude of vector.
+            Greater than 0: The magnitude of this instance is greater than the magnitude of point.
+            </returns>
+        </member>
+        <member name="F:Iisu.Data.Vector3._X">
+            <summary>
+            The X component of the vector
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3._Y">
+            <summary>
+            The Y component of the vector
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3._Z">
+            <summary>
+            The Z component of the vector
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.GetMagnitude">
+            <summary>
+            Get the magnitude of the vector [i.e. Sqrt( X*X + Y*Y + Z*Z ) ]
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.GetMagnitudeSquared">
+            <summary>
+            Get the squared magnitude of the vector [i.e. ( X*X + Y*Y + Z*Z ) ]
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Abs(Iisu.Data.Vector3)">
+            <summary>
+            Get the absolute value (which is not it's magnitude!) of a vector.
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.GetUnit">
+            <summary>
+            Get the vector's unit vector.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Normalize">
+            <summary>
+            Scale point so that the magnitude is one
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.SquaredNorm">
+            <summary>
+            get the vector's norm
+            </summary>        
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Explicit(Iisu.Data.Vector3)~System.Single[]">
+            <summary>
+            Convert the point into the array 'new float[]{ X, Y, Z }'.  Note that this
+            function causes a new float[] array to be allocated with each call.  Thus it 
+            is somewhat inefficient.
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.ToString">
+            <summary>
+            A human understandable descrivecion of the point.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Equality(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Are two points equal?
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Inequality(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Are two point not equal?
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Equals(System.Object)">
+            <summary>
+            Is given object equal to current point?
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.GetHashCode">
+            <summary>
+            Get the hashcode of the point
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.MultiplyComponentsWith(Iisu.Data.Vector3)">
+            <summary>
+            Multiply component by component
+            </summary>        
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_UnaryPlus(Iisu.Data.Vector3)">
+            <summary>
+            Do nothing.
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_UnaryNegation(Iisu.Data.Vector3)">
+            <summary>
+            Invert the direction of the point.  Result is ( -vec.X, -vec.Y, -vec.Z ).
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Multiply(System.Single,Iisu.Data.Vector3)">
+            <summary>
+            Multiply vector vec by f.  Result is ( vec.X*f, vec.Y*f, vec.Z*f ).
+            </summary>
+            <param name="scale"></param>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Multiply(Iisu.Data.Vector3,System.Single)">
+            <summary>
+            Multiply vector vec by f.  Result is ( vec.X*f, vec.Y*f, vec.Z*f ).
+            </summary>
+            <param name="vec"></param>
+            <param name="scale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Division(Iisu.Data.Vector3,System.Single)">
+            <summary>
+            Divide vector vec by f.  Result is ( vec.X/f, vec.Y/f, vec.Z/f ).
+            </summary>
+            <param name="vec"></param>
+            <param name="divisor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Addition(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Add two vectors.  Result is ( a.X + b.X, a.Y + b.Y, a.Z + b.Z )
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.op_Subtraction(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Subtract two vectors.  Result is ( a.X - b.X, a.Y - b.Y, a.Z - b.Z )
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Invert">
+            <summary>
+            Invert the direction of the vector.
+            </summary>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Add(Iisu.Data.Vector3)">
+            <summary>
+            Add 'vec' to self.  Much quicker than using '+' operator since no new objects are created.
+            </summary>
+            <param name="vec"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Subtract(Iisu.Data.Vector3)">
+            <summary>
+            Subtract 'vec' from self.  Much quicker than using '-' operator since no new objects are created.
+            </summary>
+            <param name="vec"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Multiply(System.Single)">
+            <summary>
+            Multiply self by 'scale'.  Much quicker than using '*' operator since no new objects are created.
+            </summary>
+            <param name="scale"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Divide(System.Single)">
+            <summary>
+            Divide self by 'divisor'.  Much quicker than using '/' operator since no new objects are created.
+            </summary>
+            <param name="divisor"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Min(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Get the vector with the shortest magnitude
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Max(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Get the vector with the greatest magnitude
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.MinXYZ(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Get the smallest of each of the components in vector a and vector b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.MaxXYZ(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Get the greatest of each of the components in vector a and vector b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Distance(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the distance between two points
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.DistanceSquared(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the squared distance between two points
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Dot(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the dot project (i.e. inner product) of a and b.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.DotProduct(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the dot project (i.e. inner product) of a and b.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Cross(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the cross product (i.e. outer product) of a and b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.CrossProduct(Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Calculate the cross product (i.e. outer product) of a and b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Data.Vector3.GenerateOrthonormalBasis(Iisu.Data.Vector3@,Iisu.Data.Vector3@,Iisu.Data.Vector3)">
+            <summary>
+            
+            </summary>
+            <param name="rkU"></param>
+            <param name="rkV"></param>
+            <param name="rkW"></param>
+        </member>
+        <member name="M:Iisu.Data.Vector3.Orientation(Iisu.Data.Vector3,Iisu.Data.Vector3,Iisu.Data.Vector3)">
+            <summary>
+            Determine whether sequency a-b-c is Clockwise, Counterclockwise or Collinear
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="c"></param>
+            <returns></returns> 
+        </member>
+        <member name="F:Iisu.Data.Vector3.Zero">
+            <summary>
+            Zero (0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3.One">
+            <summary>
+            One (1,1,1)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3.Origin">
+            <summary>
+            Origin (0,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3.XAxis">
+            <summary>
+            X-axis unit vector (1,0,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3.YAxis">
+            <summary>
+            Y-axis unit vector (0,1,0)
+            </summary>
+        </member>
+        <member name="F:Iisu.Data.Vector3.ZAxis">
+            <summary>
+            Z-axis unit vector (0,0,1)
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.Vector3.Item(System.Int32)">
+            <summary>
+            An index accessor that maps [0] -> X, [1] -> Y and [2] -> Z.
+            </summary>
+        </member>
+        <member name="T:Iisu.PInvoke.Interop.ErrorC">
+            <summary>
+            struct returned by iisu functions to inform if an operation succedded (and if not why)
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Vector2">
+            <summary>
+            2D vector class
+            </summary>
+        </member>
+        <member name="P:Iisu.Data.Vector2.SquaredLength">
+            <summary>
+            compute and return the Length² which is a less expensive operation than computing the Length.
+            This can be useful when simply comparing 2 vectors.
+            </summary>
+        </member>
+        <member name="T:Iisu.IApplicationConfigurator">
+            <summary>
+            an object used to configure an iisu instance. ApplicationConfigurator can be created using the <code>Iisu.Iisu.CreateConfigurator()</code> factory method.
+            </summary>
+        </member>
+        <member name="M:FlexNet.ActivationServiceInstaller.Install">
+            <summary>
+            Called to install (or upgrade) the activation service.  Should be called even if you want to register an interest in the service.
+            </summary>
+        </member>
+        <member name="M:FlexNet.ActivationServiceInstaller.UnInstall">
+            <summary>
+            Called to uninstall the activation service.
+            </summary>
+        </member>
+        <member name="M:FlexNet.ActivationServiceInstaller.fnpActSvcInstallWin(System.String,System.String)">
+            <summary>
+            Called to install (or upgrade existing) system files.  Should be called even if you want to register an interest in the services.
+            </summary>
+            <param name="publisher">The name you assign to yourself as a publisher. This string can be anything meaningful to you and does not need to match your vendor name as registered with Flexera Software, Inc. This string cannot contain the comma character.</param>
+            <param name="product">The name of the application. This name is used to identify the application is using the FlexNet Licensing Service. You should ensure that this value and the publisher name uniquely identify the application. This string can be anything meaningful to you. This string cannot contain the comma character.</param>
+            <returns>TRUE = Success, FALSE = Failure
+            Call fnpActSvcGetLastErrorWin for additional return information for both successful and failed installs.</returns>
+        </member>
+        <member name="M:FlexNet.ActivationServiceInstaller.fnpActSvcUninstallWin(System.String,System.String)">
+            <summary>
+            Called to uninstall your use of the services. Using a reference counter it determines if the services should be removed from the system.
+            </summary>
+            <param name="publisher">The name you assign to yourself as a publisher. This string can be anything meaningful to you and does not need to match your vendor name as registered with Flexera Software, Inc. This string cannot contain the comma character.</param>
+            <param name="product">The name of the application. This name is used to identify the application that was using the FlexNet Licensing Service. You should ensure that this value and the publisher name uniquely identify the application. This string can be anything meaningful to you. This string cannot contain the comma character.</param>
+            <returns>TRUE = Success, FALSE = Failure
+            Call fnpActSvcGetLastErrorWin for additional return information for both successful and failed uninstalls.</returns>
+        </member>
+        <member name="M:FlexNet.ActivationServiceInstaller.fnpActSvcGetLastErrorWin">
+            <summary>
+            Returns additional information on the operation of the last Licensing Service API function called. Additional information is available both when the call succeeded and when it failed so this function does not, as its name implies, return only errors. 
+            </summary>
+            <returns>ActSvrExtendedCodes</returns>
+        </member>
+        <member name="T:FlexNet.InstallationCodes">
+            <summary>
+            Extended return codes, given by fnpActSvcGetLastErrorWin
+            </summary>
+        </member>
+        <member name="T:Iisu.DeviceStatus">
+            <summary>
+            Describes the differents states in which the device can be
+            </summary>
+        </member>
+        <member name="F:Iisu.DeviceStatus.Initialized">
+            <summary>
+            Get the initialization state of the device.
+            </summary>
+        </member>
+        <member name="F:Iisu.DeviceStatus.DataValid">
+            <summary>
+            Get the data validity state of the device.
+            </summary>
+        </member>
+        <member name="F:Iisu.DeviceStatus.Playing">
+            <summary>
+            Get the play execution state of the device.
+            </summary>
+        </member>
+        <member name="F:Iisu.DeviceStatus.Finished">
+            <summary>
+            Get the device destruction state of the device. (Used for device destruction notification)
+            </summary>
+        </member>
+        <member name="F:Iisu.DeviceStatus.Error">
+            <summary>
+            Get the error state of the device.
+            </summary>
+        </member>
+        <member name="M:Iisu.PInvoke.EventManagerImpl.#ctor(System.IntPtr)">
+            <summary>
+            Only used when initializing iisuNet from an existing Native device
+            </summary>
+            <param name="devicePtr"></param>
+        </member>
+        <member name="M:Iisu.PInvoke.EventManagerImpl.GenerateAllCode(System.Collections.Generic.List{Iisu.PInvoke.CommandManagerImpl.MyTypeCollection})">
+            <summary>
+            generates a c# code with types for each eventType with the given typeNames[i] and the corresponding signatures from dlgParameterTypes[i]
+            </summary>
+            <param name="listDlgParameterTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iisu.Iisu">
+            <summary>
+            The iisu class is your entrypoint into the iisu API
+            you can retrieve the context from here. and create IConfigurator objects to manage the configuration of iisu.
+            </summary>
+        </member>
+        <member name="M:Iisu.Iisu.DeviceFromNativePointer(System.IntPtr)">
+            <summary>
+            Initialize a .net IDevice on top of an existing native iisu Device
+            </summary>
+            <param name="devicePtr">a native pointer to an existing iisu Device</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iisu.Iisu.CreateConfigurator(System.String)">
+            <summary>
+            Create an IConfigurator object based on the given iisu configuration file
+            </summary>
+            <param name="applicationConfigFile">the path to an iisu configuration file</param>
+            <returns></returns>
+        </member>
+        <member name="P:Iisu.Iisu.Context">
+            <summary>
+            get the Context of iisu
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Vector2i">
+            <summary>
+            2D vector class (integer)
+            </summary>
+        </member>
+        <member name="F:FlexNet.Feature.DefaultVersion">
+            <summary>
+            Version of the feature to be checkedout.
+            </summary>
+        </member>
+        <member name="F:FlexNet.Feature.DefaultQuantity">
+            <summary>
+            Number of licenses to be checked out.
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.InitializeHandle">
+            <summary>
+            Initialize handle of activation library.
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.CreateJob">
+            <summary>
+            Create new job.
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.SetAttribute">
+            <summary>
+            Set attributes for flexible API calls.
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.GetVersion">
+            <summary>
+            Get version of client library.
+            </summary>
+            <returns>Version string</returns>
+        </member>
+        <member name="M:FlexNet.Feature.FreeJob">
+            <summary>
+            Free the job handle
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.CleanupHandle">
+            <summary>
+            Cleanup handle of activation library.
+            </summary>
+        </member>
+        <member name="M:FlexNet.Feature.CheckOut(System.String,System.String,System.Int32)">
+            <summary>
+            Checks out license.
+            </summary>
+            <param name="feature">Feature to be checked out.</param>
+            <param name="version">Version of feature to be checked out.</param>
+            <param name="quantity">Number of licenses to be checked out.</param>
+        </member>
+        <member name="M:FlexNet.Feature.CheckIn(System.String)">
+            <summary> 
+            Checks in license.
+            </summary>
+            <param name="feature">Feature to be checked in.</param>        
+        </member>
+        <member name="M:FlexNet.Feature.GetErrorString">
+            <summary>
+            Gets the error string.
+            </summary>
+        </member>
+        <member name="T:Iisu.Error">
+            <summary>
+            class from iisu to inform if an operation succeeded (and if not why)
+            </summary>
+        </member>
+        <member name="T:Iisu.Data.Vector3i">
+            <summary>
+            2D vector class (integer)
+            </summary>
+        </member>
+        <member name="T:Iisu.PInvoke.Interop.SkArrayFunctions">
+            <summary>
+            helper functions for SkArray type
+            </summary>
+        </member>
+    </members>
+</doc>
