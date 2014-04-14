@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IisuInteractionDesignerProject Version="3.0.20">
+  <Graph id="{0d522fa1-6437-4d07-b41a-f842de8c119b}">
+    <Node id="{e3cc78c6-8465-4d3a-bdc1-25cfc704e9ec}" name="" type="iisu device">
+      <Output id="{bf9531c1-099c-4b73-b04b-33ce0517ffe2}" name="CI.HAND1.IsOpen" />
+      <Output id="{a8b6f973-2e2c-44a3-9a23-15bce61fb210}" name="CI.HAND1.Status" />
+    </Node>
+    <Node id="{bdfc5fd5-d6c3-4534-89c5-cc5ad9731b04}" name="" type="iisu skeleton" />
+    <Node id="{13e9e916-1f83-4b62-a577-aa4a928ae806}" name="Script" type="lua script">
+      <Input id="{07d3e6c8-c468-4015-9d21-e3de9ea68d72}" name="CI.HAND1.IsOpen" />
+      <Input id="{0304bfa5-35fd-42da-9336-369cb00b85ca}" name="CI.HAND1.Status" />
+      <Output id="{41485b7f-47ab-477b-b00e-8c9dca5bacb7}" name="CoinCoin" />
+      <CustomParameter id="{41485b7f-47ab-477b-b00e-8c9dca5bacb7}" />
+      <Content><![CDATA[function init()
+Count = 0
+oldStatusHand1 = false
+currentStatus =false
+CoinCoin = false
+end
+
+function main()
+
+if CI_HAND1_Status == 0 then
+Count = 0
+CoinCoin = false
+end
+currentStatus = CI_HAND1_IsOpen
+if currentStatus ~=  oldStatusHand1 then
+	Count = Count +1
+	if Count == 4 then
+	CoinCoin = true
+	end
+	oldStatusHand1 = currentStatus
+end
+end
+]]></Content>
+    </Node>
+    <Link source="{e3cc78c6-8465-4d3a-bdc1-25cfc704e9ec}" sourceoutput="{bf9531c1-099c-4b73-b04b-33ce0517ffe2}" destination="{13e9e916-1f83-4b62-a577-aa4a928ae806}" destinationinput="{07d3e6c8-c468-4015-9d21-e3de9ea68d72}" />
+    <Link source="{e3cc78c6-8465-4d3a-bdc1-25cfc704e9ec}" sourceoutput="{a8b6f973-2e2c-44a3-9a23-15bce61fb210}" destination="{13e9e916-1f83-4b62-a577-aa4a928ae806}" destinationinput="{0304bfa5-35fd-42da-9336-369cb00b85ca}" />
+  </Graph>
+  <Movies />
+  <WindowLayout>
+    <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.202173913043478" DockBottomPortion="0.797826086956522" ActiveDocumentPane="-1" ActivePane="-1">
+      <Contents Count="1">
+        <Content ID="0" PersistString="IID.FormDepth" AutoHidePortion="0.696069469835466" IsHidden="False" IsFloat="False" />
+      </Contents>
+      <Panes Count="1">
+        <Pane ID="0" DockState="DockBottom" ActiveContent="0">
+          <Contents Count="1">
+            <Content ID="0" RefID="0" />
+          </Contents>
+        </Pane>
+      </Panes>
+      <DockWindows>
+        <DockWindow ID="0" DockState="Document" ZOrderIndex="1">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="1" DockState="DockLeft" ZOrderIndex="3">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="2" DockState="DockRight" ZOrderIndex="4">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="3" DockState="DockTop" ZOrderIndex="5">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="4" DockState="DockBottom" ZOrderIndex="2">
+          <NestedPanes Count="1">
+            <Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+          </NestedPanes>
+        </DockWindow>
+      </DockWindows>
+      <FloatWindows Count="0" />
+    </DockPanel>
+  </WindowLayout>
+  <Visualization3D userCentroidsVisible="False" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="False" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16" ciPalmPositionVisible="True" ciPalmNormalVisible="True" ciPointingDirVisible="True" ciFingerTipsVisible="True" ciCentroidsVisible="True" ciMeshVisible="True" ciGrabbersVisible="True" ciOpennessGaugeVisible="True" ciHandednessVisible="True" ciOpenStateVisible="True" hand1Color="66FF66FF" hand2Color="66CCFFFF">
+    <Camera>
+      <Position x="0.6" y="-0.8" z="0.6" />
+      <Orientation yaw="25" pitch="-25" />
+    </Camera>
+  </Visualization3D>
+</IisuInteractionDesignerProject>
