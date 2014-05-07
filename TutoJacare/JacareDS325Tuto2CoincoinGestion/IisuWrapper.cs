@@ -10,12 +10,10 @@ using System.IO;
 
 namespace Retargeting
 {
-    /// <summary>
-    /// Wrapper around Iisu engine.
-    /// </summary>
     public class IisuWrapper
     {
 
+	// modification henry Pollet
         // iisu handle
         private IHandle _iisuHandle;
         private IDevice _device;
